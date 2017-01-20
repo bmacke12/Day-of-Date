@@ -1,0 +1,15 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string select;
+    
+    cout << "Select a holiday:\n";
+    cout << "Valentines Day\nSt. Patricks Day\nApril Fool's Day\nMother's Day\nFather's Day\nFourth of July\nHalloween\nThanksgiving\nChristmas Eve\nChristmas Day\n New Year's Eve\nNew Year's Day\n";
+    
+    cin >> select;
+    
+    
+}
