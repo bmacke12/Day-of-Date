@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+Blake Macke
+5/11/2017
+Day of Date
+html
+-->
+
+
+<head>
+<title>Day of Date</title>
+</head>
+
+<body>
+<h1>Day of Date</h1>
+<p><em>By Blake Macke 5/11/2017</em></p>
+
+<p>Select a holiday and enter a year, or use a custom date,<br> 
+and the program will display what day of the week that date is on.</p>
+
+<p>If "Custom" is selected, enter the full date desired in the "Year" Box.<br>
+Format the full date <strong>month/day/year i.e. 06/12/2057</strong> </p>
+
+<select id="mySelect">
+	<option>*Select Holiday*</option>
+	<option>Custom</option>
+	<option>Valentine's Day</option>
+	<option>St. Patrick's Day</option>
+	<option>April Fool's Day</option>
+	<option>Halloween</option>
+	<option>Christmas Eve</option>
+</select>
+
+<form> 
+  Enter Year: <input type="text" id="textbox" name="year" placeholder="Enter year.."><br>
+  <button type="button" onclick="date()">Enter</button>
+</form>
+
+<div id="print"></div>
+<div id="printa"></div> 
+
+<script type="text/javascript">
+function date()
+{
+	var x = document.getElementById("mySelect").selectedIndex;
+	var y = document.getElementById("mySelect").options;
+	var holi = y[x].text;
+
+	if (holi == "*Select Holiday*")
+	{
+		alert("Error: Select a Holdiay option");
+		return;
+		
+	}
+	
+	if (!document.getElementById("textbox").value)
+	{
+		alert("Error: Type a year");
+		return;
+	}
+
+	if (holi == "Custom")
+	{
+		var gettext = document.getElementById("textbox").value;
+		var substr = gettext.split("/");
+		var month = parseInt(substr[0]);
+		var day = parseInt(substr[1]);
+		var year = parseInt(substr[2]);
+		var holi = "0" + month + "/" + day;
+
+		var doy = getCustomDOY(month, day);
+		var dow = (doy-1)%7;
+
+		if (doy >= 59)
+			var ly = true;
+		else
+			var ly = false;
+
+		if (year != 2017)
+		{
+			ndow = getDay(dow, ly, year);
+		}
+			
+		else
+		{
+			ndow = dow;
+		}
+
+		var weekname = getWeekName(ndow);
+
+	}
+
+	else
+	{
+		var year = parseInt(document.getElementById("textbox").value);		
+
+		if (holi == "Valentine's Day")
+		{
+			var doy = 45;
+			var dow = (doy-1)%7;
+			var ly = false;
+			var ndow;
+			
+			if (year != 2017)
+			{
+				ndow = getDay(dow, ly, year);
+			}
+			
+			else
+			{
+				ndow = dow;
+			}
+
+			var weekname = getWeekName(ndow);
+		}
+
+		if (holi == "April Fool's Day")
+		{
+			var doy = 91;
+			var dow = (doy-1)%7;
+			var ly = true;
+			var ndow;
+			
+			if (year != 2017)
+			{
+				ndow = getDay(dow, ly, year);
+			}
+			
+			else
+			{
+				ndow = dow;
+			}
+
+			var weekname = getWeekName(ndow);
+		}
+
+		if (holi == "Halloween")
+		{
+			var doy = 304;
+			var dow = (doy-1)%7
+			var ly = true;
+			var ndow;
+			
+			if (year != 2017)
+			{
+				ndow = getDay(dow, ly, year);
+			}
+			
+			else
+			{
+				ndow = dow;
+			}
+
+			var weekname = getWeekName(ndow);
+		}
+
+		if (holi == "St. Patrick's Day")
+		{
+			var doy = 76;
+			var dow = (doy-1)%7;
+			var ly = true;
+			var ndow;
+			
+			if (year != 2017)
+			{
+				ndow = getDay(dow, ly, year);
+			}
+			
+			else
+			{
+				ndow = dow;
+			}
+
+			var weekname = getWeekName(ndow);
+		}
+
+		if (holi == "Christmas Eve")
+		{
+			var doy = 359;
+			var dow = (doy-1)%7;
+			var ly = true;
+			var ndow;
+			
+			if (year != 2017)
+			{
+				ndow = getDay(dow, ly, year);
+			}
+			
+			else
+			{
+				ndow = dow;
+			}
+
+			var weekname = getWeekName(ndow);
+		}
+		
+	}
+	
+	document.getElementById("print").innerHTML="<br>The day of the week " + holi + " falls on in " + year + " is " + weekname + ".";			
+}
+
+function getDay(dow, ly, year)
+{
+	var count = 0;
+	var i;
+	
+	if (year > 2017)
+	{
+		for (i = 2017; i < year; i++)
+		{
+			if ((i % 4 === 0) && (i % 100 !== 0) && (((i % 400) % 2) === 0))
+			{
+				count++;
+			}
+		}
+		
+		if ((ly === true) && (year % 4 === 0) && (year % 100 !== 0) && (((year % 400) % 2) === 0))
+		{
+			count++;
+		}
+		
+		var total = (year - 2017) + count;		
+
+		return (dow + total) % 7;
+	}
+	
+	else
+	{
+		for (i = 2017; i > year; i--)
+		{
+			if ((i % 4 === 0) && (i % 100 !== 0) && (((i % 400) % 2) === 0))
+			{
+				count++;
+			}
+		}
+		
+		if ((ly === false) && (year % 4 === 0) && (year % 100 !== 0) && (((year % 400) % 2) === 0))
+		{
+			count++;
+		}
+
+		var total = (2017 - year) + count;
+
+		return (dow-total)%7;
+	}
+}
+
+function getCustomDOY(month, day)
+{
+	if (month == 1)
+		return day;
+
+	if (month == 2)
+		return (31 + day);
+
+	if (month == 3)
+		return (59 + day);
+
+	if (month == 4)
+		return (90 + day);
+
+	if (month == 5)
+		return (120 + day);
+
+	if (month == 6)
+		return (150 + day);
+
+	if (month == 7)
+		return (181 + day);
+
+	if (month == 8)
+		return (212 + day);
+
+	if (month == 9)
+		return (242 + day);
+	
+	if (month == 10)
+		return (272 + day);
+
+	if (month == 11)
+		return (304 + day);
+
+	if (month == 12)
+		return (335 + day);
+}
+
+function getWeekName(ndow)
+{
+	if (ndow == 0)
+		return "Sunday";
+
+	if (ndow == 1)
+		return "Monday";
+
+	if (ndow == 2)
+		return "Tuesday";
+
+	if (ndow == 3)
+		return "Wednesday";
+
+	if (ndow == 4)
+		return "Thursday";
+
+	if (ndow == 5)
+		return "Friday";
+
+	else
+		return "Saturday";
+}
+	
+
+
+</script>
+
+</body>
+</html>
