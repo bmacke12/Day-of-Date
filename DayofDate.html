@@ -8,7 +8,7 @@
 
 <body>
 <h1>Day of Date</h1>
-<p><em>By Blake Macke</em></p>
+<p><em>By Blake Macke 05/11/2017</em></p>
 
 <p>Select a holiday and enter a year, or use a custom date,<br> 
 and the program will display what day of the week that date is on.</p>
@@ -72,6 +72,13 @@ function date()
 		var holi = month + "/" + day; // A string for displaying month/day.
 
 		var doy = getCustomDOY(month, day); // Calls getCustomDOY.
+		
+		if (!doy) // If date is an error.
+		{	
+			alert("Invalid Date");
+			return;
+		}
+		
 		var dow = (doy-1)%7; // Uses doy to find the day of the week from 0 - 6. 0 being Sunday. The "-1" is to account for Sunday == 0.
 
 		if (doy >= 59) // Checks if the date is past leap day.
@@ -256,6 +263,9 @@ function getDay(dow, ly, year) // Gets the new day of the week.
 
 function getCustomDOY(month, day) // Returns the day of year in the form (1 to 365) of 2017. March = 31(Jan) + 28(Feb).
 {
+	if (day > 31)
+		return false;
+	
 	if (month == 1) // Jan
 		return day;
 
@@ -291,6 +301,8 @@ function getCustomDOY(month, day) // Returns the day of year in the form (1 to 3
 
 	if (month == 12) // Dec
 		return (335 + day);
+	if (month < 1 || month > 12)
+		return false;
 }
 
 function getWeekName(ndow) // Gets new day of week (0 - 6) and returns the day of week in word form.
@@ -323,3 +335,4 @@ function getWeekName(ndow) // Gets new day of week (0 - 6) and returns the day o
 
 </body>
 </html>
+
