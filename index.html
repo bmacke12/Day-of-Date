@@ -73,7 +73,7 @@ function date()
 
 		var doy = getCustomDOY(month, day); // Calls getCustomDOY.
 		
-		if (doy) // If date is an error.
+		if (!doy) // If date is an error.
 		{	
 			alert("Invalid Date");
 			return;
